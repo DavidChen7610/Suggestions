@@ -22,16 +22,15 @@ class FileUtils(object):
         else:
             print "%s not exist" % file_name
 
-    def exist_files(self, file_name):
+    def exist_files(self, files):
         '''
         判断文件是否存在
         :param file_names: "test1.txt,test2.txt"
         :return:list [(test1.txt:True), (test2.txt:False)]
         '''
-        if not file_name:
-            raise Exception('file_name is %s' % file_name)
-        res_tuple = [(item.strip(), os.path.exists(item.strip())) for item in file_name.split(',')]
-        return res_tuple
+        if not files:
+            raise Exception('file_name is %s' % files)
+        return [(item.strip(), os.path.exists(item.strip())) for item in files.split(',')]
         # res_dict = {}
         # for name in files:
         #     res_dict[name] = os.path.exists(name)
