@@ -22,15 +22,15 @@ class FileUtils(object):
         else:
             print "%s not exist" % file_name
 
-    def exist_files(self, files):
+    def exist_files(self, files, path='.'):
         '''
         判断文件是否存在
-        :param file_names: "test1.txt,test2.txt"
-        :return:list [(test1.txt:True), (test2.txt:False)]
+        :param file_names: "test1.txt,test2.txt,others/test3.txt"
+        :return:list [(test1.txt:True), (test2.txt:False), ('others/test3.txt', True)]
         '''
         if not files:
             raise Exception('file_name is %s' % files)
-        return [(item.strip(), os.path.exists(item.strip())) for item in files.split(',')]
+        return [(item.strip(), os.path.exists(os.path.join(path, item.strip()))) for item in files.split(',')]
         # res_dict = {}
         # for name in files:
         #     res_dict[name] = os.path.exists(name)
@@ -52,7 +52,7 @@ print time()-t
 
 
 if __name__ == '__main__':
-    res = FileUtils().exist_files('test.txt, test1.txt')
+    res = FileUtils().exist_files('test.txt, test1.txt, others/multithread.py')
     print res
     for item in res:
         if item[1]:
