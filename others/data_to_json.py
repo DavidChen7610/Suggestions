@@ -2,6 +2,7 @@
 __author__ = 'florije'
 import os
 import json
+import datetime
 
 
 class DataUtility(object):
@@ -36,7 +37,13 @@ class DataUtility(object):
                     res_dict['data'].append(tmp_data)
         return res_dict
 
+    def generate_files_by_date(self):
+        print datetime.datetime.now().strftime("%Y-%m-%d")
+        print datetime.timedelta(days=1)
+        # print datetime.f
+
 
 if __name__ == '__main__':
     print DataUtility().dat_to_dict('data.dat')
+    DataUtility().generate_files_by_date()
 
