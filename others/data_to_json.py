@@ -22,7 +22,7 @@ class DataUtility(object):
             return json.dumps(res_dict)
 
         with open(full_file_name, 'r') as file:
-            for line in file:
+            for line in file.readlines():
                 line_data = line.strip('\n').split('|')
                 if len(line_data) == 1:
                     res_dict['num'] = int(line_data[0])
@@ -34,7 +34,7 @@ class DataUtility(object):
                                 'status': line_data[9], 'paychannel': line_data[10], 'ext_account': line_data[11],
                                 'usercode': line_data[12], 'settle_time': line_data[13], 'batch_no': line_data[14]}
                     res_dict['data'].append(tmp_data)
-        return json.dumps(res_dict)
+        return res_dict
 
 
 if __name__ == '__main__':
