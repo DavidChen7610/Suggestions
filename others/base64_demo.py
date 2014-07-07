@@ -3,6 +3,15 @@ __author__ = 'florije'
 
 import base64
 
+'''
+In [1]: s = '\x42\x4d\x38\x8c\x0a\x00\x00\x00\x00\x00\x36\x00\x00\x00\x28\x00\x00\x00\x80\x02\x00\x00\x68\x01\x00\x00\x01\x00\x18\x00'
+
+In [2]: import struct
+
+In [3]: struct.unpack('<ccIIIIIIHH', s)
+Out[3]: ('B', 'M', 691256, 0, 54, 40, 640, 360, 1, 24)
+'''
+
 if __name__ == '__main__':
     based_str = base64.b64encode('fuboqing')
     print based_str
