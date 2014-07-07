@@ -3,12 +3,13 @@ __author__ = 'florije'
 import time
 import datetime
 import os
+import json
 
 
 class FetchFile(object):
 
-    def generate_file_dict(self, appkey, start_time, end_time, path='.'):
-        need_file_names = self.__generate_file_names(appkey, start_time, end_time)
+    def generate_file_dict(self, appkey, product_code, start_time, end_time, path='.'):
+        need_file_names = self.__generate_file_names(appkey, product_code, start_time, end_time)
         local_files = self.__get_local_files(start_time, end_time, path)
         to_download_files = [item for item in need_file_names if not item in local_files]
 
@@ -39,7 +40,7 @@ class FetchFile(object):
 
         return res_files
 
-    def __generate_file_names(self, appkey, start_time, end_time):
+    def __generate_file_names(self, appkey, product_code, start_time, end_time):
         '''
         这里是生成需要的文件
         :param appkey: 变化的appkey参数
@@ -47,15 +48,16 @@ class FetchFile(object):
         :param end_time: 截止时间
         :return: list[] 返回需要下载的文件的名称
         '''
+        format_str = "%Y%m%d"
         start_date = datetime.datetime.strptime(start_time, format_str)
         end_date = datetime.datetime.strptime(end_time, format_str)
         res_files = []
         if start_date == end_date:
-            res_files.append('PAY_%s_1024_%s.dat' % (appkey, start_time))  # todo 返回拼接的数据
+            res_files.append('PAY_%s_%s_%s.dat' % (appkey, product_code, start_time))  # todo 返回拼接的数据
             return res_files
         delta = datetime.timedelta(days=1)
         while start_date <= end_date:
-            res_files.append('PAY_%s_1024_%s.dat' % (appkey, start_date.strftime(format_str)))
+            res_files.append('PAY_%s_%s_%s.dat' % (appkey, product_code, start_date.strftime(format_str)))
             start_date = start_date + delta
 
         return res_files
@@ -84,4 +86,6 @@ if __name__ == '__main__':
 
     # print FetchFile().get_local_files('20140601', '20140705', 'data')
     # print FetchFile().generate_file_names('600016', '20140701', '20140707')
-    print FetchFile().generate_file_dict('600016', '20140701', '20140715', 'data')
+    res_dict = FetchFile().generate_file_dict('600016', '1024', '20140701', '20140715', 'data')
+    res_json = json.dumps(res_dict)
+    print res_json
