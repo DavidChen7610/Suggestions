@@ -32,12 +32,15 @@ class FetchFile(object):
         format_str = "%Y%m%d"
         for p, d, f in os.walk(path):
             for full_name in f:
-                str_time = full_name.split('_')[-1].split('.')[0]
-                if datetime.datetime.strptime(start_time, format_str) <= datetime.datetime.strptime(str_time,
-                                                                                                    format_str) <= datetime.datetime.strptime(
-                        end_time, format_str):
-                    res_files.append(full_name)
-
+                dat_last = full_name.split('.')
+                if len(dat_last) > 1 and dat_last[-1] == 'dat':
+                    str_time = full_name.split('_')[-1].split('.')[0]
+                    if datetime.datetime.strptime(start_time, format_str) <= datetime.datetime.strptime(str_time,
+                                                                                                        format_str) <= datetime.datetime.strptime(
+                            end_time, format_str):
+                        res_files.append(full_name)
+                else:
+                    pass
         return res_files
 
     def __generate_file_names(self, appkey, product_code, start_time, end_time):
@@ -86,6 +89,6 @@ if __name__ == '__main__':
 
     # print FetchFile().get_local_files('20140601', '20140705', 'data')
     # print FetchFile().generate_file_names('600016', '20140701', '20140707')
-    res_dict = FetchFile().generate_file_dict('600016', '1024', '20140701', '20140715', 'data')
+    res_dict = FetchFile().generate_file_dict('600016', '1024', '20140601', '20140701', 'data')
     res_json = json.dumps(res_dict)
     print res_json
