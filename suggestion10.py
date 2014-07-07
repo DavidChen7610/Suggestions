@@ -4,7 +4,9 @@ __author__ = 'florije'
 Lazy evaluation常被译作延迟计算，或者惰性计算，指的就是仅仅在真正需要执行的时候才会计算表达式的值，充分利用lazy evaluation的特性带来的
 好处就是主要体现在以下方面：
 1/避免不必要的计算，带来性能上的提升。
-2/
+2/节省空间，使得无限循环的数据结构成为可能
+Python中最典型的使用延迟计算的例子就是生成器表达式了。它仅仅在每次需要计算的时候才通过yield产生所需的元素。斐波那契数列在Python中实现
+起来显得很简单，而while True也不会导致其他语言中所遇到的无限循环的问题。
 '''
 
 import os
@@ -49,6 +51,15 @@ for i in xrange(1000000):
 
 print "total run time"
 print time()-t
+
+
+def fib():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+from itertools import islice
+print list(islice(fib(), 5))
 
 
 if __name__ == '__main__':
