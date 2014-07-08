@@ -52,8 +52,8 @@ class FetchFile(object):
             dir_path = os.path.join(path, dir_name)
 
             format_str = "%Y%m%d"
-            for p, d, f in os.walk(dir_path):
-                for full_name in f:
+            for root, dir, file in os.walk(dir_path):
+                for full_name in file:
                     dat_last = full_name.split('.')
                     if len(dat_last) > 1 and dat_last[-1] == 'dat':
                         str_time = full_name.split('_')[-1].split('.')[0]
