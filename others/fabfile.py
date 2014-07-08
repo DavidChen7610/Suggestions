@@ -2,9 +2,9 @@
 __author__ = 'florije'
 from fabric.api import *
 
-# env.hosts = ['106.186.117.251:22']
-# env.user = "florije"
-# env.password = '903326'
+env.hosts = ['106.186.117.251:22']
+env.user = "florije"
+env.password = '***'
 
 
 def hello():
