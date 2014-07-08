@@ -52,13 +52,14 @@ class FetchFile(object):
             dir_path = os.path.join(path, dir_name)
 
             format_str = "%Y%m%d"
-            for root, dir, file in os.walk(dir_path):
-                for full_name in file:
-                    dat_last = full_name.split('.')
+            for parent, directory, files in os.walk(dir_path):
+                for file_name in files:
+                    print os.path.join(parent, file_name)
+                    dat_last = file_name.split('.')
                     if len(dat_last) > 1 and dat_last[-1] == 'dat':
-                        str_time = full_name.split('_')[-1].split('.')[0]
+                        str_time = file_name.split('_')[-1].split('.')[0]
                         if datetime.datetime.strptime(start_time, format_str) <= datetime.datetime.strptime(str_time, format_str) <= datetime.datetime.strptime(end_time, format_str):
-                            res_files.append(full_name)
+                            res_files.append(file_name)
                     else:
                         continue
 
