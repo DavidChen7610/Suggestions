@@ -3,6 +3,7 @@ __author__ = 'florije'
 import os
 import json
 import datetime
+import fileinput
 
 
 class DataUtility(object):
@@ -21,6 +22,11 @@ class DataUtility(object):
         full_file_name = os.path.join(file_path, file_name)
         if not os.path.exists(full_file_name):
             return json.dumps(res_dict)
+
+        file_content = fileinput.input(full_file_name)
+        for line in file_content:
+            print(line)
+        file_content.close()
 
         with open(full_file_name, 'r') as file:
             for line in file.readlines():
