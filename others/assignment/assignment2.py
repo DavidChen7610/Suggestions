@@ -10,7 +10,7 @@ def get_content(file_path):
     res_list = []
     with open(name=file_path, mode='r') as ap_file:
         for line in ap_file.readlines():
-            res_list.append([item.strip() for item in line.strip('\n').split(',')])
+            res_list.append([content_item.strip() for content_item in line.strip('\n').split(',')])
     return res_list
 
 
@@ -25,25 +25,26 @@ def list_bubble_sort(list_arg, index):
 def resolve_assignment_1st(file_path):
     org_list = get_content(file_path)
     sorted_list = list_bubble_sort(org_list[1:], 1)
-    return [item for item in sorted_list[0:5]], [item for item in sorted_list[-1:-6:-1]]
+    return [sorted_item for sorted_item in sorted_list[0:5]], [sorted_item for sorted_item in sorted_list[-1:-6:-1]]
 
 
 def resolve_assignment_2nd(file_path):
     org_list = get_content(file_path)
     sorted_list = list_bubble_sort(org_list[1:], 3)
-    return [item for item in sorted_list[-1:-4:-1]], [item for item in sorted_list if int(item[3]) == 0]
+    return [sorted_item for sorted_item in sorted_list[-1:-4:-1]], \
+           [sorted_item for sorted_item in sorted_list if int(sorted_item[3]) == 0]
 
 
-def resolve_assignment_3rd(file_path, percentage):
+def resolve_assignment_3rd(file_path, percentage_arg):
     org_list = get_content(file_path)
     sorted_list = list_bubble_sort(org_list[1:], 3)
     item_index = 0
-    for item in sorted_list:
-        if int(item[3]) > percentage:
-            item_index = sorted_list.index(item)
+    for sorted_item in sorted_list:
+        if int(sorted_item[3]) > percentage_arg:
+            item_index = sorted_list.index(sorted_item)
             break
-        elif int(item[3]) == percentage:
-            item_index = sorted_list.index(item) + 1
+        elif int(sorted_item[3]) == percentage_arg:
+            item_index = sorted_list.index(sorted_item) + 1
             break
     return sorted_list[item_index:]
 
