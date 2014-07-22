@@ -1,0 +1,2 @@
+1.文件里面的read_file中with open(file_path, 'r') as 不对，看看
+2.排序算法不对，输入的是什么，输出的是什么？

@@ -17,7 +17,7 @@ def write_file():
 def read_file():
     start_time = datetime.datetime.now()
     # with fileinput.input('testfile.txt') as f_input:
-    #     for line in f_input:
+    # for line in f_input:
     #         print(line)
 
     f_input = fileinput.input('testfile.txt')
@@ -31,6 +31,17 @@ def read_file():
     end_time = datetime.datetime.now()
     print((end_time - start_time).seconds)
 
+
 if __name__ == '__main__':
     # write_file()
-    read_file()
+    # read_file()
+
+    for i in range(0, 20):
+        print i
+    raw_input()
+    for i in range(-1, 20, 2):
+        print '%d%d' % (0, 0) if i == -1 else '%d%d' % (i, i + 1)
+        # if i == 0:
+        #     print '%d%d' % (0, 0)
+        # else:
+        #     print '%d%d' % (i, i + 1)
