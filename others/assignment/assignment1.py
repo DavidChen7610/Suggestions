@@ -39,8 +39,8 @@ def pyramid(size_arg):
     :param size_arg:
     :return:null
     '''
-    for i in range(size_arg):  # range(size_arg): from 0 to size
-        print (' ' * (size_arg - i - 1) + '*' * (i * 2 + 1))
+    for item in range(size_arg):  # range(size_arg): from 0 to size
+        print (' ' * (size_arg - item - 1) + '*' * (item * 2 + 1))
 
 
 def rot13(string):

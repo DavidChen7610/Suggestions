@@ -140,36 +140,12 @@ def switch(list, index):
 
 
 def sumEvens(linkedList):
-
     sum_evens = 0
     while linkedList != None:
         if linkedList['data'] % 2 == 0:
             sum_evens += linkedList['data']
         linkedList = linkedList['next']
     return sum_evens
-
-    # head_node = nthNode(linkedList, 0)
-    # if head_node:
-    #     # head_node_value = head_node['data']
-    #     if head_node['data'] % 2 == 0:
-    #         head_node_next = head_node['next']
-    #         head_node_value = head_node['data']
-    #         while head_node_next:
-    #             if head_node_next['data'] % 2 == 0:
-    #                 head_node_value += head_node_next['data']
-    #             head_node_next = head_node_next['next']
-    #         return head_node_value
-    #
-    #     else:
-    #         head_node_next = head_node['next']
-    #         head_node_value = 0
-    #         while head_node_next:
-    #             if head_node_next['data'] % 2 == 0:
-    #                 head_node_value += head_node_next['data']
-    #             head_node_next = head_node_next['next']
-    #         return head_node_value
-    # else:
-    #     return 0
 
 
 def testInsert():
@@ -193,7 +169,7 @@ def testSumEvens():
     myList = createList([])
     print "The sum of the even numbers in an empty list is ", sumEvens(myList)
     myList = createList([5, 15, 25])
-    print "The sume of the even numbers in the final list is ", sumEvens(myList)
+    print "The sum of the even numbers in the final list is ", sumEvens(myList)
 
 
 def testSwitch():
@@ -225,8 +201,8 @@ def main():
     # linkedList = insertValueHead(linkedList, 20)
     # print "The list contains the following values", listString(linkedList)
 
-    testInsert()
-    testSwitch()
+    # testInsert()
+    # testSwitch()
     testSumEvens()
 
 

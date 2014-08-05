@@ -39,6 +39,7 @@ if __name__ == '__main__':
     print a
 
     print reverse_str('fuboqing')
+
     t = time.clock()
     a = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     # print [item * 3 if tx.index(item) < 3 else item for item in tx]
