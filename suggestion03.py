@@ -1,7 +1,7 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#!/usr/bin/python
-__author__ = 'yanghua'
 
+__author__ = 'yanghua'
 '''
 理解python与C语言的不同之处
 
@@ -15,10 +15,11 @@ __author__ = 'yanghua'
 
 def f(num):
     return {
-        0: "The first one!",
+        0: "The first one!",  # noqa
         1: "The second one!",
         2: "The third one!"
     }.get(num, "No vainly!")
 
+
 if __name__ == '__main__':
-    print f(2)
+    print(f(2))

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 __author__ = 'florije'
-
 '''
 很多人以为Python中不存在常量，实际上Python的内建命名空间是支持一小部分常量的。例如True,False,None
 只是Python没有提供常量的直接方式而已。
@@ -12,15 +11,10 @@ __author__ = 'florije'
 import const
 
 const.COMPANY = "IBM"
-# const.COMPANY = "SAP"
+try:
+    const.COMPANY = "SAP"
+except const.ConstError as e:
+    print(e)
 
-
-class Show(object):
-
-    def show(self, name):
-        print 'name is: %s' % (name,)
-
-if __name__ == '__main__':
-    Show().show(name='tom')
-
-
+from constant import const
+print(const.MY_SECOND_CONSTANT)

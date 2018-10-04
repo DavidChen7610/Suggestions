@@ -20,9 +20,9 @@ class FileUtils(object):
         :return:
         '''
         if os.path.exists(file_name):
-            print "%s exist" % file_name
+            print("%s exist" % file_name)
         else:
-            print "%s not exist" % file_name
+            print("%s not exist" % file_name)
 
     def exist_files(self, files, path='.'):
         '''
@@ -43,14 +43,14 @@ from time import time
 
 t = time()
 abbreviations = ['cf.', 'e.g', 'ex.', 'etc.', 'fig.', 'i.e.', 'Mr.', 'vs.']
-for i in xrange(1000000):
+for i in range(1000000):
     for w in ('Mr.', 'Hat', 'is', 'chasing', 'the', 'black', 'cat', '.'):
-        # if w in abbreviations:  # 在编程的时候，如果对于or
-        if w[-1] == '.' and w in abbreviations:
+        # if w in abbreviations:
+        if w[-1] == '.' and w in abbreviations:  # if x and y ，如果x为false，则不用计算y，缩减时间
             pass
 
-print "total run time"
-print time()-t
+print("total run time")
+print(time() - t)
 
 
 def fib():
@@ -58,13 +58,15 @@ def fib():
     while True:
         yield a
         a, b = b, a + b
+
+
 from itertools import islice
-print list(islice(fib(), 5))
+print(list(islice(fib(), 5)))
 
 
 if __name__ == '__main__':
     res = FileUtils().exist_files('test.txt, test1.txt, others/multithread.py')
-    print res
+    print(res)
     for item in res:
         if item[1]:
-            print item[0]
+            print(item[0])

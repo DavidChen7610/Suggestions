@@ -9,17 +9,17 @@ finally语句中对文件句柄进行关闭操作。
 
 
 def finally_test():
-    print 'I am starting------'
+    print('I am starting------')
     while True:
         try:
-            print 'I am running!' + a
+            print('I am running!' + a)
             # raise IndexError('IndexError!')
-        except IndexError, e:
-            print 'NameError happened %s' % e
+        except IndexError as e:
+            print('NameError happened %s' % e)
         finally:
-            print 'finally executed!'
+            print('finally executed!')
             break
-    print 'you see it!'
+    print('you see it!')
 
 finally_test()
 
@@ -41,22 +41,19 @@ you see it!
 
 
 def return_test(a):
-    res = []
     try:
         if a <= 0:
             raise ValueError('Data can not be negative')
         else:
-            res.append(a)
             return a
     except ValueError as e:
-        print e
+        print(e)
     finally:
-        print 'The end!'
-        res.append(-1)
-        return res
+        print('The end!')
+        return -1
 
-print return_test(0)
-print return_test(2)
+print(return_test(0))
+print(return_test(2))
 
 '''
 !!!!!这本书讲的根本就不对！！！！！！！！！！

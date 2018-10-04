@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
-__author__ = 'florije'
 
+"""
+建议55：__init__()不是构造方法
+"""
+
+__author__ = 'florije'
 '''
 很多Pythoner会有这样的误解，认为__init__()方法是类的构造方法，因为从表面上看它确实很像构造方法：
 当需要实例化一个对象的时候，使用a=Class(args...)便可以返回一个类的实例，可是事实是怎么样的呢？看例子：
@@ -9,67 +13,111 @@ __author__ = 'florije'
 
 class A(object):
     def __new__(cls, *args, **kwargs):
-        print cls
-        print args
-        print kwargs
-        print '-' * 20
-        instance = object.__new__(cls, *args)
-        print instance
+        print(cls)
+        print(args)
+        print(kwargs)
+        print('-' * 20)
+        instance = object.__new__(cls)  # 注意，只要参数cls
+        return instance
 
     def __init__(self, a, b):
-        print 'init gets called!'
-        print 'self is', self
+        print('init gets called!')
+        print('self is', self)
         self.a, self.b = a, b
 
-# a1 = A(1, 2)
-# print a1.a
-# print a1.b
 
-'''
-result:
-<class '__main__.A'>
-(1, 2)
-{}
---------------------
-<__main__.A object at 0x02151670>
-Traceback (most recent call last):
-  File "D:/Projects/python/Suggestions/suggestion55.py", line 25, in <module>
-    print a1.a
-AttributeError: 'NoneType' object has no attribute 'a'
-'''
+a1 = A(1, 2)
+print(a1.a)
+print(a1.b)
 
-'''
-我们原本期望的是能够正确的输出a和b的值，可是运行却抛出了异常，除了异常外还有来自对__new__()方法调用所产生的输出，
-可是我们明明没有直接调用__new__()方法，原因在哪里？实际上__init__()并不是真正意义上的构造方法，它所作的工作是在类的对象创建好
-之后进行变量的初始化，__new__()方法才会真正的创建实例，是类的构造方法。
-这两个方法都是object类中默认的方法，继承自object的新式类，如果不覆盖这两个方法，将会默认调用object中对应的方法，上面的程序
-抛出异常是因为__new__()方法没有显示返回对象，因此实际上a1，是None，当去访问实例属性a时，就会抛出属性错误的异常。
-这里我们来看一下__new__()方法和__init__()方法的定义。
-object.__new__(cls[, args...])其中cls代表类，args为参数列表。
-object.__init__(self[, args...])其中self代表实例对象，args为参数列表。
-这两个方法之间有些不同，总结如下：
-__new__()方法是静态方法，而__init__()方法是实例方法。
-__new__()方法一般需要返回类的对象，当返回类的对象时将会自动调用__init__()方法进行初始化，如果没有对象返回，则__init__()方法不会被调用
-__init__()方法不需要显示返回，默认为None，否则会在运行时抛出TypeError。
-当需要控制实例创建的时候可使用__new__()方法，而控制实例初始化的时候使用__init__()方法。
-一般情况下不需要覆盖__new__()方法，但当子类继承自不可变类型，如str，int，unicode或者tuple的时候，往往需要覆盖该方法。
-
-当需要覆盖__new__()和__init__()方法的时候，这两个方法的参数必须保持一致，如果不一致将导致异常：
-'''
+# <class '__main__.A'>
+# (1, 2)
+# {}
+# --------------------
+# init gets called!
+# self is <__main__.A object at 0x7f7393bfd518>
+# 1
+# 2
 
 
-class Test(object):
-    # def __new__(cls, x):  # 这里会提示有问题
-    #     return super(Test, cls).__new__(cls)
-
-    def __new__(cls, x, y):
-        return super(Test, cls).__new__(cls)
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+# 在哪些特殊情况下需要覆盖__new__()方法？
+# 1、当类继承（如str,int,unicode,tuple或者frozenset等)不可变类型且默认的__new__()方法不变时，满足不了需求
+# 设想将一个字符串按空格切分，只修改__init__()，结果与设想不同
+class UserSet(frozenset):
+    def __init__(self, arg=None):
+        if isinstance(arg, str):
+            arg = arg.split()
+        frozenset.__init__(arg)  # 参数随意也行，完全不起作用
 
 
-'''
-前面都说了，一般情况下覆盖__init__()
-'''
+print(UserSet('I am testing'))
+print(frozenset('I am testing'))
+
+# UserSet({'m', ' ', 't', 'I', 'n', 'i', 'e', 'a', 'g', 's'})
+# frozenset({'m', ' ', 't', 'I', 'n', 'i', 'e', 'a', 'g', 's'})
+
+
+# 正确的方法是修改__new__()
+class UserSet(frozenset):
+    def __new__(cls, *args):
+        if args and isinstance(args[0], str):
+            args = (args[0].split(), ) + args[1:]
+        return super().__new__(cls, *args)
+
+
+print(UserSet('I am testing'))
+print(frozenset('I am testing'))
+
+# UserSet({'testing', 'I', 'am'})
+# frozenset({'I', 'a', ' ', 'n', 't', 'i', 'e', 'm', 's', 'g'})
+
+
+# 2、用来实现工厂模式或者单例模式或者进行元类编程，以简单工厂为例子
+class Shape(object):
+    def __init__(self):
+        pass
+
+    def draw(self):
+        pass
+
+
+class Triangle(Shape):
+    def __init__(self):
+        print('I am a triangle')
+
+    def draw(self):
+        print('I am drawing triangle')
+
+
+class Rectangle(Shape):
+    def __init__(self):
+        print('I am a rectangle')
+
+    def draw(self):
+        print('I am drawing rectangle')
+
+
+class ShapeFactory(object):
+    shapes = {'triangle': Triangle, 'rectangle': Rectangle}
+
+    def __new__(cls, name):
+        if name in cls.shapes:
+            print('creating a new shape %s' % name)
+            return cls.shapes[name]()
+        else:
+            print('creating a new shape %s' % name)
+            return Shape()
+
+
+# 函数形式
+# def ShapeFactory(name):
+#     shapes = {'triangle': Triangle, 'rectangle': Rectangle}
+
+#     if name in shapes:
+#         print('creating a new shape %s' % name)
+#         return shapes[name]()
+#     else:
+#         print('creating a new shape %s' % name)
+#         return Shape()
+
+ShapeFactory('rectangle').draw()

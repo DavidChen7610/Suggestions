@@ -40,3 +40,12 @@ ascii进行解码，假如不对的话，那就是乱码。一定要记清楚这
 import sys
 print sys.getdefaultencoding()
 
+# 补充
+# 可以使用标准库里的chardet的detect方法来检测字符串的编码方式
+# import chardet
+# chardt.detect('中文测试')
+
+# python2.6之后可以通过import unicode_literals自动将普通字符串识别为unicode字符串,与python3保持一致
+# 不过它与chardet有冲突
+from __future__ import unicode_literals
+s = '中文测试'

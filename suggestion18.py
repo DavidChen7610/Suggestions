@@ -68,4 +68,7 @@ from Package01 import Test
 能够有效的避免名称空间的冲突，使用
 '''
 
-
+# 补充
+# 在python3.5下，Package01下的__init__.py里面写from Module01 import Test，提示找不到Module01模块，正确的写法是使用相对路径
+# from .Module01 import *
+# 相对路径只能存在包中

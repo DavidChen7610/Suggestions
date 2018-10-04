@@ -55,7 +55,7 @@ def enumerate(sequence, start=0):
 
 def myenumerate(sequence, start=0):
     n = -1
-    for elem in sequence:
+    for elem in reversed(sequence):
         yield len(sequence) + n, elem
         n -= 1
 

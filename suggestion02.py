@@ -14,3 +14,31 @@ __author__ = 'yanghua'
 # 以更好的支持惯用法，
 # 深入学习业界公认的比较Pythonic的代码，比如Flask，gevent和requests等
 #
+
+
+# ## 补充
+
+# gevent对python3来说不算好，可以用asyncio
+# 参看 https://link.zhihu.com/?target=http%3A//www.dongwm.com/archives/%25E4%25BD%25BF%25E7%2594%25A8Python%25E8%25BF%259B%25E8%25A1%258C%25E5%25B9%25B6%25E5%258F%2591%25E7%25BC%2596%25E7%25A8%258B-%25E6%2588%2591%25E4%25B8%25BA%25E4%25BB%2580%25E4%25B9%2588%25E4%25B8%258D%25E5%2596%259C%25E6%25AC%25A2Gevent/
+# 参看 https://www.cnblogs.com/zhaof/p/7536569.html
+# 使用Gevent的性能确实要比用传统的线程高，甚至高很多。但这里不得不说它的一个坑：
+#   Monkey-patching，我们都叫猴子补丁，因为如果使用了这个补丁，Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题
+#   第三方库支持。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent
+
+
+# requests 绝对可以代替标准库的urllib，提供更简单更人性化的库，Requests: HTTP for Humans
+# http://docs.python-requests.org/en/master/
+
+import requests
+
+r = requests.get('https://api.github.com/user', auth=('user', 'pass'))
+print(r.status_code)
+# 403
+print(r.headers['content-type'])
+# 'application/json; charset=utf8'
+print(r.encoding)
+# 'utf-8'
+print(r.text)
+# {"message":"Maximum number of login attempts exceeded. Please try again later.","documentation_url":"https://developer.github.com/v3"}
+print(r.json())
+# {'documentation_url': 'https://developer.github.com/v3', 'message': 'Maximum number of login attempts exceeded. Please try again later.'}
