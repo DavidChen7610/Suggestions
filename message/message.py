@@ -93,6 +93,7 @@ class Broker(object):
         assert isinstance(topic, Hashable)
         return topic in self._board
 
+
 # 这是单例模式
 _broker = Broker()
 sub = _broker.sub
