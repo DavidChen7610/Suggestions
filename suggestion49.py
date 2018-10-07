@@ -1,4 +1,7 @@
-import os
+# coding: utf-8
+"""
+建议49：使用Queue使多线程编程更安全
+"""
 import queue
 import threading
 import requests
@@ -23,7 +26,7 @@ class DownloadThread(threading.Thread):
         ret = re.findall('www.(.+?).com', url)
         urlhandler = requests.get(url)
         fname = ret[0] + '.html'
-        with open(fname, 'w') as f:
+        with open(fname, 'w', encoding='utf-8') as f:
             f.write(urlhandler.text)
 
 

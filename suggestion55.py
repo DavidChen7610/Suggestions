@@ -1,14 +1,10 @@
-# -*- coding: utf-8 -*-
-
+# coding: utf-8
 """
 建议55：__init__()不是构造方法
-"""
 
-__author__ = 'florije'
-'''
 很多Pythoner会有这样的误解，认为__init__()方法是类的构造方法，因为从表面上看它确实很像构造方法：
 当需要实例化一个对象的时候，使用a=Class(args...)便可以返回一个类的实例，可是事实是怎么样的呢？看例子：
-'''
+"""
 
 
 class A(object):
@@ -29,7 +25,6 @@ class A(object):
 a1 = A(1, 2)
 print(a1.a)
 print(a1.b)
-
 # <class '__main__.A'>
 # (1, 2)
 # {}
@@ -67,7 +62,6 @@ class UserSet(frozenset):
 
 print(UserSet('I am testing'))
 print(frozenset('I am testing'))
-
 # UserSet({'testing', 'I', 'am'})
 # frozenset({'I', 'a', ' ', 'n', 't', 'i', 'e', 'm', 's', 'g'})
 

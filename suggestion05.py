@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
-__author__ = 'florije'
-'''
+# coding: utf-8
+"""
+建议5：通过适当添加空行使代码布局更为优雅，合理
 
-'''
+# 可以参考建议02，在编辑器中使用相应的插件，统一风格
+"""
 import random
 
 guesses_made = 0
@@ -16,6 +17,7 @@ guess = 0
 while guesses_made < 6:
     guess = int(input('Take a guess: '))
     guesses_made += 1
+
     if 1 <= guess <= 20:
         if guess < number:
             print('Your guess is too low!')
@@ -27,6 +29,7 @@ while guesses_made < 6:
         # raise Exception('guess input error')
         print('guess input error')
         continue
+
 if guess == number:
     print('Good job, {0}! You guessed my number in {1} guesses!'.format(name, guesses_made))
 else:

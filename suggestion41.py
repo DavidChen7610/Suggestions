@@ -1,5 +1,8 @@
-# 建议41：使用argparse处理命令行参数
-# 参考 https://docs.python.org/3.5/howto/argparse.html
+# coding: utf-8
+"""
+建议41：使用argparse处理命令行参数
+参考 https://docs.python.org/3.5/howto/argparse.html
+"""
 
 import argparse
 

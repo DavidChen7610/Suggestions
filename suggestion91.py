@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议91：使用Cython编写扩展模块
 

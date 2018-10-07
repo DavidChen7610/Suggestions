@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议47：使用logging记录日志信息
 logging lib包含以下4个主要对象：

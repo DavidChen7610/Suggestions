@@ -1,6 +1,8 @@
+# coding: utf-8
 """
 建议37：按需选择sort()或者sorted()
-只留下sorted()函数
+
+python3只留下sorted()函数
 sorted(iterable, key=None, reverse=False)
 """
 """

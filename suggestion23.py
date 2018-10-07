@@ -1,12 +1,26 @@
-# -*- coding: utf-8 -*-
-__author__ = 'florije'
+# coding: utf-8
+"""
+建议23：使用else子句简化循环（异常处理）
 
-'''
-使用else子句简化循环(异常处理)
-'''
+除了if...else...
+还有以下用法：
+for...else...
+try...else...
+"""
 
-'''
-有其他编程语言经验的程序员接触到Python时，对于它无所不在的else往往感到非常的惊讶，在Python中，不仅分支语句有else子句，而且循环语句也有，
-甚至连异常处理也有，首先来看看循环语句中的else，卡看他们的用法。
-'''
+# 当for没有中断跳出的话，则运行else
+for i in range(10):
+    if i == 15:
+        break
+else:
+    print(i)
 
+
+# 当try没有抛出异常的话，则运行else
+try:
+    # raise ValueError('can not be 0')
+    3 / 2
+except ValueError as e:
+    print(e)
+else:
+    print('ok')

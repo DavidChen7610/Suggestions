@@ -1,5 +1,6 @@
+# coding: utf-8
 """
-使用copy模块深拷贝对象
+建议38：使用copy模块深拷贝对象
 """
 
 from copy import deepcopy, copy
@@ -21,7 +22,7 @@ a = A('apple')
 a.order.append(1)
 a.order.append(2)
 
-b = copy(a) if input('浅复制输入1，其余为深复制') == '1' else deepcopy(a)
+b = copy(a) if input('[浅复制输入1，其余为深复制]，请输入字符：') == '1' else deepcopy(a)
 a.show_detail()
 a.show_ids()
 b.show_detail()

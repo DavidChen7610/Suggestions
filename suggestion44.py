@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议44：理解模块pickle优劣
 pickle最主要的两个函数对为dump()和load()，分别用来进行对象的序列化和反序列化。
@@ -15,6 +16,7 @@ pickle协议是python特定的，不同语言之间的兼容性难以保障。
 # 对于古典类可以在类定义中提供__getinitargs__()函数，unpickle时调用__init__()，
 # 并把__getinitargs__()中返回的元组作为参数传递给__init__()
 # 对于新式类可以提供__getnewargs__()函数，unpickle时以class.__new__(class, *arg)的方式创建对象。
+
 # 对于不可序列化的对象，如sockets，文件句柄，数据库连接等，也可以通过实现pickle协议来解决，
 # 主要是通过特殊方法__getstate__()和__setstate__()来返回实例在被pickle时的状态。
 

@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议72：做paster创建包
 

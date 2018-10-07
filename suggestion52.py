@@ -33,38 +33,43 @@ pub('greet', 'LaiYongHao')
 
 # 相对于这个简化版本，blinker和python-message两个模块的实现要完备得多。
 # blinker已经被用在多个项目上，如是flask和django，而python-message则支持更多丰富的特性
-# message模块是laiyonghao自己写的，原来只能用在python2.x，我抽出来改写__init__.py使其能应用在python3.5上
-# __init__.py里不要用import xxx和from xxx import *，py3不能识别
-# 以下例子用message解耦，满足不同日志输出
+# message模块是laiyonghao自己写的，原来只能用在python2.x，我抽出来改写了__init__.py使其能应用在python3.5上
+
+# 以下例子是用message解耦，满足不同日志输出
 import message
 LOG_MSG = ('log', 'foo')
 
 
 def bar():
+    """重要函数，给外部调用者使用，执行前先打印些信息，方便调试查看"""
     message.pub(LOG_MSG, 'Haha, Calling bar().')
     # do_sth()
 
 
-# 以下是调用
-# import message
-# import suggestion52
+# 以下代码是在别的文件调用
+"""
+## 使用者在console直接输出调试信息
+import message
+import suggestion52
 
-# def handle_foo_log_msg(txt):
-#     print(txt)
+def handle_foo_log_msg(txt):
+    print(txt)
 
-# message.sub(suggestion52.LOG_MSG, handle_foo_log_msg)
-# suggestion52.bar()
+message.sub(suggestion52.LOG_MSG, handle_foo_log_msg)
+suggestion52.bar()
 
-# import message
-# import suggestion52
+## 使用者在logging中输出日志信息
+import message
+import suggestion52
 
-# def handle_foo_log_msg(txt):
-#     import logging
-#     logging.basicConfig(level=logging.DEBUG)
-#     logging.debug(txt)
+def handle_foo_log_msg(txt):
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+    logging.debug(txt)
 
-# message.sub(suggestion52.LOG_MSG, handle_foo_log_msg)
-# suggestion52.bar()
+message.sub(suggestion52.LOG_MSG, handle_foo_log_msg)
+suggestion52.bar()
+"""
 
 # 订阅发布模式是观察者模式的超集，它既不关注消息的发布者，也不关注消息的订阅者，它还可以退化成为
 # 观察者模式，如下：

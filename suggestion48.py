@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议48：使用threading模块编写多线程程序
 """

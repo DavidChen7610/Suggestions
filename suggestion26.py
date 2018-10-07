@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
-__author__ = 'florije'
+# coding: utf-8
+"""
+建议26：深入理解None，正确判断对象是否为空
 
-'''
-深入理解None，正确判断对象是否为空
-'''
-'''
-先来看一段代码：
-if a is not None:
-    Do something
-else:
-    Do something
-'''
+python中以下数据当做空来处理：
+常量None
+常量False
+任何形式的数值类型零，如果0， 0.0
+空的序列
+空的字典
+"""

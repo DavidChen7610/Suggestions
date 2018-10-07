@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议40：深入掌握ConfigParser
 """
@@ -28,7 +29,6 @@ print(conf.getboolean('DEFAULT', 'option'))
 print(conf.get('section1', 'platform'))
 # windows
 
-
 # 从配置里获取格式化后的数据库连接字符串
 conf = ConfigParser()
 conf.read('format.conf')
@@ -36,4 +36,3 @@ print(conf.get('db1', 'conn_str'))
 print(conf.get('db2', 'conn_str'))
 # mysql://aaa:ppp@(host)s:3306/example
 # mysql://root:www@(host)s:3306/example
-

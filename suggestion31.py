@@ -1,101 +1,72 @@
-# -*- coding: utf-8 -*-
-__author__ = 'florije'
-'''
-记住函数传参既不是传值也不是传引用
-'''
+# coding: utf-8
+"""
+建议31:记住函数传参既不是传值也不是传引用
 
-'''
-Python 中的函数参数到底是传值还是传引用呢，这比较纠结，很多的论坛也有这样的讨论，总结来说基本有3个观点，传引用，传值，可变对象传引用，
-不可变对象传值
-那到底是怎么进行处理呢？
-1、传引用
-'''
+1、所有对象皆有id值。
+2、所有名称只是对象的标签，单纯的标签没有意义，并没有指向内存，标签可以从对象上绑定，或者撕下。
+3、所谓函数传参，只是标签的名称不一样，实际上它们的指向是相同对象。
+
+给对象的赋值就是另外开辟新空间，标签名随之指新对象
+n = 1
+n = n + 1
+两个n的id值不相同
+
+a = [1]
+a = a + [2]
+两个a的id值也不相同
+
+b = 3
+c = b
+b和c的id值相同
+
+# 补充
+foo(*args, **kwargs)中的args, kwargs是浅复制实参，参考建议33
+"""
 
 
 def inc(n):
-    print id(n)
+    print(id(n))
     n = n + 1
-    print id(n)
+    print(id(n))
+
 
 n = 3
-print id(n)
+print(id(n))
 inc(n)
-print n
-
-'''
-7185088
-7185088
-7185076
-3
-'''
-'''
-按照传引用的概念，上面的例子期望的输出应该是4，并且inc()函数里面执行操作n=n+1的前后的id值应该是不变的，
-可是结果的确实，n的值还是没有变化，但是id(n)的值在函数体前后却不一致了。看来传引用这个不是很正确了。
-'''
+print(n, '\n')
 
 
 def change_list(orginator_list):
-    print 'orginator list is:', orginator_list
+    print('orginator list is:', orginator_list)
     new_list = orginator_list
     new_list.append('I am new!')
-    print 'New list is:', new_list
+    print('New list is:', new_list)
     return new_list
 
 
 orginator_list = ['a', 'b', 'c']
 new_list = change_list(orginator_list)
-print new_list
-print orginator_list
-
-'''
-传值通俗的来讲就是这个意思，你在内存中有一个位置，我也有一个位置，我把我的值复制给你，以后你做什么就跟我没有关系啦，我是我，你是你，
-但是这上面的就不是这么回事了，看来纯碎的说传值也是不对的
-'''
-
-'''
-可变对象传引用，不可变对象传值，这个说法最靠谱，好多人也是这么理解的，但是这个说法到底对不对？我们看一个例子的说：
-'''
+print(new_list)
+print(orginator_list, '\n')
 
 
 def change_me(org_list):
-    print id(org_list)
+    print(id(org_list))
     new_list = org_list
-    print id(new_list)
+    print(id(new_list))
     if len(new_list) > 5:
         new_list = ['a', 'b', 'c']
     for i, e in enumerate(new_list):
         if isinstance(e, list):
             new_list[i] = '***'
-    print new_list
-    print id(new_list)
+    print(new_list)
+    print(id(new_list))
 
 
 test1 = [1, ['a', 1, 3], [2, 1], 6]
 change_me(test1)
-print test1
+print(test1, '\n')
+
 test2 = [1, 2, 3, 4, 5, 6, [1]]
 change_me(test2)
-print test2
-
-'''
-35301856
-35301856
-[1, '***', '***', 6]
-35301856
-[1, '***', '***', 6]
-35299456
-35299456
-['a', 'b', 'c']
-35299496
-[1, 2, 3, 4, 5, 6, [1]]
-'''
-
-'''
-因此对于Python函数参数是传值还是传递引用这个问题的答案是：都不是，正确的说法是传对象，或者说是，传对象的引用，函数参数在传递的过程中将
-整个对象传入，对可变对象的修改在函数外部和内部都是可见的，调用者和被调用者之间共享这个对象，而对于不可变对象，由于并不能真正被修改，因此，
-修改往往是通过生成一个新对象然后赋值来实现。
-'''
-
-
-if __name__ == '__main__':
-    pass
+print(test2)

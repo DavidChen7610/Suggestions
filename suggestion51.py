@@ -1,7 +1,26 @@
 # coding: utf-8
 """
 建议51：用mixin模式让程序更加灵活
+
+经python2.7和python3.5测试，原文表述__bases__有误，实例是没有__bases__属性的，只有类才有这个属性。
+动态生成新类，只能用type(name, bases, dict)来实现。
 """
+
+
+class KungfuTeapot(object):
+    def put_in_tea(self):
+        print('put in tea')
+
+    def put_in_water(self):
+        print('put in water')
+
+
+class Coffeepot(object):
+    def put_in_coff(self):
+        print('put in coff')
+
+    def put_in_water(self):
+        print('put in water')
 
 
 class People(object):
@@ -12,47 +31,26 @@ class People(object):
         return teapot
 
 
-class UseSimpleTeapot(object):
-    def get_teapot(self):
-        return SimpleTeapot()
-
-
 class UseKungfuTeapot(object):
     def get_teapot(self):
         return KungfuTeapot()
 
 
 class UseCoffeepot(object):
-    def get_teapot(self):
+    def get_coffeepot(self):
         return Coffeepot()
 
 
-def simple_tea_people():
-    people = People()
-    people.__bases__ += (UseSimpleTeapot,)
-    return people
-
-
-def coffee_people():
-    people = People()
-    people.__bases__ += (UseCoffeepot,)
-    return people
-
-
-def tea_and_coffee_people():
-    people = People()
-    people.__bases__ += (UseSimpleTeapot, UseCoffeepot,)
-    return people
-
-
 def boss():
-    people = People()
-    type(people).__bases__ += (UseKungfuTeapot, UseCoffeepot,)
+    bases = (
+        People,
+        UseKungfuTeapot,
+        UseCoffeepot,
+    )
+    Boss = type('Boss', bases, {})
+    people = Boss()
     return people
 
 
-# 测试环境py2.7和py3.5，这个例子不再适用
-# 这个例子有两处错误，一个是实例没有__bases__属性，只能class有，所以要转为type(xxx)；另一个致命错误是
-# Cannot create a consistent method resolution order (MRO) for bases UseKungfuTeapot, object, UseCoffeepot
-# 解决这个问题，可能元类是一个方向
 people = boss()
+people.make_tea()

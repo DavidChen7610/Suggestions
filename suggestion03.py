@@ -1,16 +1,12 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-
-__author__ = 'yanghua'
-'''
+# coding: utf-8
+"""
 理解python与C语言的不同之处
 
-1/缩进和{}
-2/'与""
-3/三元操作符"?:"
-4/switch...case
-
-'''
+1 缩进和{}
+2 ' 与 "
+3 三元操作符 C?X:Y 和 X if C else Y
+4 switch...case 和 字典
+"""
 
 
 def f(num):

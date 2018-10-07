@@ -1,9 +1,12 @@
+# coding: utf-8
 """
 建议60：区别__getattr__()和__getattribute__()方法
+
+它们都可以用做实例属性的获取和拦截（仅对实例属性有效，非类属性）
 __getattr__()适用于未定义的属性
 __getattribute__()对于所有属性的访问都会调用，仅应用于新式类，默认自带，要么返回属性值，要么抛出异常
-如果在新式类中定义了__getattr__()，有2种情况会被调用：要么它在__getattribute__()抛出异常，对应
-__getattr__()的原来的定义，即适用于未定义的属性;要么在__getattribute__()中显示调用__getattr__()
+如果在新式类中定义了__getattr__()，有2种情况会被调用：一是它在__getattribute__()抛出异常时，被调用;
+二是在__getattribute__()中显示调用__getattr__()
 """
 
 
@@ -23,10 +26,10 @@ class ClassA:
 
 a = ClassA()
 print(a.x)
-a.y
+print(a.y, '\n')
 # test x
 # __getattr__
-print()
+# None
 
 
 # __getattr__()有一个隐藏陷阱
@@ -42,9 +45,11 @@ class A(object):
         elif name == 'y':
             return self.x**3
 
+        # raise AttributeError  # python3, python2
+        # raise TypeError  # python2
+
     def __getattribute__(self, attr):
         try:
-            print('calling __getattribute__: ', attr)
             return super(A, self).__getattribute__(attr)
         except KeyError:
             return 'default'
@@ -53,27 +58,17 @@ class A(object):
 a = A('attribute')
 print(a.name)
 print(a.z)
-a.zz = 3  # 动态增加属性时不会调用__getattribute__()
-print('a.zz : ', a.zz)  # 读取时才会调用__getattribute__
 if hasattr(a, 't'):  # 隐藏陷阱，自动设置属性t，其值为None，结果返回为True，调用__getattribute__
     c = a.t
-    print(c)
+    print(c, '\n')
 else:
-    print('instance a has no attribute t')  # 如果要执行这句，必须在__getattr__中raise AttributeError
-# calling __getattribute__:  name
+    print('instance a has no attribute t', '\n')  # 如果要执行这句，必须在__getattr__中raise AttributeError
 # attribute
-# calling __getattribute__:  z
 # calling __getattr__:  z
-# calling __getattribute__:  x
 # 400
-# calling __getattribute__:  zz
-# a.zz :  3
-# calling __getattribute__:  t
 # calling __getattr__:  t
-# calling __getattribute__:  t
 # calling __getattr__:  t
 # None
-print()
 
 
 # property和getattribute顺序

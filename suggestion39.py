@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议39：使用Counter进行计数统计
 """

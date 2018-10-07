@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议50：利用模块实现单例模式
 """
@@ -35,3 +36,17 @@ print(id(a) == id(b))
 # calling __init__()
 # calling __init__()
 # True
+
+
+# Borg模式，所有实例共享状态
+class Borg(object):
+    __share_state = {}
+
+    def __init__(self):
+        self.__dict__ = self.__share_state
+
+
+a, b = Borg(), Borg()
+a.a = 123
+print(a.a, b.a)
+print(id(a.a), id(b.a))

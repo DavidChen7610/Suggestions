@@ -1,5 +1,7 @@
+# coding: utf-8
 """
-熟悉python对象协议
+建议63：熟悉python对象协议
+
 因为python是一门动态语言，duck typing的概念遍布其中，只要方法的名字一样就可以调用。
 
 类型转换协议：
@@ -83,10 +85,10 @@ __exit__()
 class Closer(object):
     def __init__(self, obj):
         self.obj = obj
-    
+
     def __enter__(self):
         return self.obj  # bound to target
-    
+
     def __exit__(self, et, ev, tb):
         try:
             self.obj.close()
@@ -95,7 +97,7 @@ class Closer(object):
             return True  # exception handled successfully
 
 
-with Closer(open('suggestion63.py')) as f:
+with Closer(open('suggestion63.py', encoding='utf-8')) as f:
     print(f.readline())
 
 f.readline()
@@ -103,7 +105,6 @@ f.readline()
 # I/O operation on closed file.
 #   File "/home/ubuntu/Desktop/Suggestions/suggestion63.py", line 101, in <module>
 #     f.readline()
-
 """
 与这里Closer类似的类在标准库中已经存在，就是contextlib里的closing。
 """

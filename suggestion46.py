@@ -1,3 +1,4 @@
+# coding: utf-8
 """
 建议46：使用traceback获取栈信息
 """

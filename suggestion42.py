@@ -1,3 +1,7 @@
+# coding: utf-8
+"""
+建议42：使用pandas处理大型CSV文件
+"""
 # import os
 
 # 创建大文件的技巧
@@ -17,18 +21,18 @@ import csv
 
 
 df = pd.read_csv('SampleData.csv', nrows=5, usecols=['OrderData', 'Item', 'Total'])
-print(df)
+print(df, '\n')
 
 dia = csv.excel()
 dia.delimiter = '|'
-print(pd.read_csv('SD.csv'))
+print(pd.read_csv('SD.csv'), '\n')
 
 # 设置csv文件与excel兼容，其中分隔符为'|'，而error_bad_lines=False会直接忽略不符合要求的记录
 # 测试文件只有多余的'|'行才会被忽略，而少的'|'不会忽略
-print(pd.read_csv('SD.csv', dialect=dia, error_bad_lines=False))
+print(pd.read_csv('SD.csv', dialect=dia, error_bad_lines=False), '\n')
 
 # 对文件分块处理并返回一个可迭代的对象
 reader = pd.read_table('SampleData.csv', chunksize=3, iterator=True)
-print(type(reader))
+print(type(reader), '\n')
 # <class 'pandas.io.parsers.TextFileReader'>
 next(iter(reader))

@@ -1,34 +1,30 @@
-# -*- coding: utf-8 -*-
-__author__ = 'florije'
+# coding: utf-8
+"""
+建议25：避免finally中可能发生的陷阱
 
-'''
-无论try语句中是否有异常抛出，finally语句总会被执行，由于这个特性，finally语句经常被用来做一些清理工作，比如打开一个文件，抛出异常后在
-finally语句中对文件句柄进行关闭操作。
-
-'''
+无论try语句中是否有异常抛出，finally语句总会被执行。
+finally有2个陷阱，不能用return 或 break
+"""
 
 
-def finally_test():
+# 没有处理的异常被丢弃没有向上抛出，有时不是一个好事情
+def FinallyTest():
     print('I am starting------')
     while True:
         try:
-            print('I am running!' + a)
-            # raise IndexError('IndexError!')
-        except IndexError as e:
+            print('I am running!')
+            raise IndexError('IndexError!')
+        except NameError as e:
             print('NameError happened %s' % e)
         finally:
             print('finally executed!')
-            break
-    print('you see it!')
+            break  # 第一个陷阱
 
-finally_test()
 
-'''
-result:
-I am starting------
-finally executed!
-you see it!
-'''
+FinallyTest()
+# I am starting------
+# I am running!
+# finally executed!
 
 '''
 上面的例子中try代码块抛出了IndexError异常，但是在except块却没有对应的异常声明，按常理该异常会向上层抛出，可是程序输出却没有提示任何的
@@ -40,7 +36,8 @@ you see it!
 '''
 
 
-def return_test(a):
+# 总返回一个不正确的值
+def ReturnTest(a):
     try:
         if a <= 0:
             raise ValueError('Data can not be negative')
@@ -50,20 +47,17 @@ def return_test(a):
         print(e)
     finally:
         print('The end!')
-        return -1
+        return -1  # 第2个陷阱
 
-print(return_test(0))
-print(return_test(2))
+
+print(ReturnTest(0))
+print(ReturnTest(2))
+# Data can not be negative
+# The end!
+# -1
+# The end!
+# -1
 
 '''
-!!!!!这本书讲的根本就不对！！！！！！！！！！
-'''
-
-'''
-result:
-Data can not be negative
-The end!
--1
-The end!
--1
+ReturnTest(2)返回是-1，是因为finally是必须执行的，但它return -1，故此结果也就-1，这是finally第二个陷阱
 '''
